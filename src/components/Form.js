@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-
+import { useHistory } from 'react-router-dom'; 
 function Form() {
     // ユーザー名とパスワードの状態を定義
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
-  
+    const history = useHistory(); 
       // フォームの送信処理
   async function handleSubmit(event) {
     event.preventDefault(); // デフォルトのフォーム送信を阻止
@@ -21,6 +21,7 @@ function Form() {
             username,
             password,
             password_confirmation: passwordConfirmation
+            
           }
         })
       });
@@ -28,7 +29,9 @@ function Form() {
       if (response.ok) {
         const data = await response.json();
         console.log(data);
+        localStorage.setItem('token', data.data.token); // トークンをローカルストレージに保存
         alert('Registration successful!');
+        history.push('/login');
         // 登録成功後の処理（例: ログインページへリダイレクト）
       } else {
         throw new Error('Something went wrong with the registration.');

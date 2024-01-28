@@ -8,7 +8,7 @@ const ThemeSwitch = () => {
   const { theme, toggleTheme } = useContext(ThemeContext); // Using context to get theme and toggleTheme
 
   return (
-    <div className="switch">
+    <div >
       <ReactSwitch onChange={toggleTheme} checked={theme === "dark"} />
     </div>
   );

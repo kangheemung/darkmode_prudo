@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 function Form() {
     // ユーザー名とパスワードの状態を定義
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
-    const history = useHistory(); 
+    const navigate = useNavigate();
       // フォームの送信処理
   async function handleSubmit(event) {
     event.preventDefault(); // デフォルトのフォーム送信を阻止
 
     try {
-      const response = await fetch('http://#{#}/api/v1/users', {
+      const response = await fetch('http://52.192.132.104:8080/api/v1/users', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -21,7 +21,7 @@ function Form() {
             username,
             password,
             password_confirmation: passwordConfirmation
-            
+
           }
         })
       });
@@ -31,7 +31,7 @@ function Form() {
         console.log(data);
         localStorage.setItem('token', data.data.token); // トークンをローカルストレージに保存
         alert('Registration successful!');
-        history.push('/login');
+        navigate('/api/v1/login');
         // 登録成功後の処理（例: ログインページへリダイレクト）
       } else {
         throw new Error('Something went wrong with the registration.');
